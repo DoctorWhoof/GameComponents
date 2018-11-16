@@ -3,8 +3,9 @@ Namespace gui3d
 Class Entity Extension
 	
 	Method MouseOverEvent()
-		If gui3d.componentMap[ Self ]
-			For Local c := Eachin gui3d.componentMap[ Self ]
+		Local guiStack := gui3d.componentMap[ Self ]
+		If guiStack
+			For Local c := Eachin guiStack
 				c.OnMouseOver()
 			Next
 		End
@@ -12,8 +13,9 @@ Class Entity Extension
 	
 	
 	Method MouseEnterEvent()
-		If gui3d.componentMap[ Self ]
-			For Local c := Eachin gui3d.componentMap[ Self ]
+		Local guiStack := gui3d.componentMap[ Self ]
+		If guiStack
+			For Local c := Eachin guiStack
 				c.OnMouseEnter()
 			Next
 		End
@@ -21,8 +23,9 @@ Class Entity Extension
 	
 	
 	Method MouseLeaveEvent()
-		If gui3d.componentMap[ Self ]
-			For Local c := Eachin gui3d.componentMap[ Self ]
+		Local guiStack := gui3d.componentMap[ Self ]
+		If guiStack
+			For Local c := Eachin guiStack
 				c.OnMouseLeave()
 			Next
 		End
@@ -30,8 +33,9 @@ Class Entity Extension
 	
 	
 	Method MouseClickEvent( button:MouseButton )
-		If gui3d.componentMap[ Self ]
-			For Local c := Eachin gui3d.componentMap[ Self ]
+		Local guiStack := gui3d.componentMap[ Self ]
+		If guiStack
+			For Local c := Eachin guiStack
 				c.OnMouseClick( button )
 			Next
 		End
@@ -39,8 +43,9 @@ Class Entity Extension
 	
 	
 	Method MouseHoldEvent( button:MouseButton )
-		If gui3d.componentMap[ Self ]
-			For Local c := Eachin gui3d.componentMap[ Self ]
+		Local guiStack := gui3d.componentMap[ Self ]
+		If guiStack
+			For Local c := Eachin guiStack
 				c.OnMouseHold( button )
 			Next
 		End
@@ -48,8 +53,9 @@ Class Entity Extension
 	
 	
 	Method MouseReleaseEvent( button:MouseButton )
-		If gui3d.componentMap[ Self ]
-			For Local c := Eachin gui3d.componentMap[ Self ]
+		Local guiStack := gui3d.componentMap[ Self ]
+		If guiStack
+			For Local c := Eachin guiStack
 				c.OnMouseRelease( button )
 			Next
 		End

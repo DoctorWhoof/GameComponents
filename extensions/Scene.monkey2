@@ -81,16 +81,4 @@ Class Scene Extension
 		
 	End
 	
-	
-'	Method DrawGui3D( canvas:Canvas )
-'		For Local e := Eachin GetRootEntities()
-'			Local guistack := gui3d.componentMap[ e ]
-'			If guistack
-'				For Local c := Eachin guistack
-'					c.OnDraw( canvas )
-'				Next
-'			End
-'		Next
-'	End
-	
 End

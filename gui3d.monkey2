@@ -4,7 +4,7 @@ Namespace gui3d
 #Import "<mojo>"
 #Import "<mojo3d>"
 
-#Import "source/GuiComponent"
+#Import "components/GuiComponent"
 #Import "extensions/Scene"
 #Import "extensions/Entity"
 #Import "extensions/Canvas"
