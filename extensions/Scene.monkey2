@@ -10,9 +10,14 @@ Public
 
 Class Scene Extension
 	
-	Method UpdateGui3D( camera:Camera, coords:Vec2f, mask:Int = -1 )
+	Method UpdateGui3D( camera:Camera, mouseCoords:Vec2f, mask:Int = -1 )
+		
+		'Enter (possibly scaled) mouse coordinates
+		GuiComponent.SetScaledMouse( mouseCoords, camera.Viewport )
+		
 		'Pick it!
-		Local pick := camera.Pick( coords, mask )
+		mouseCoords.Y = camera.Viewport.Height - mouseCoords.Y
+		Local pick := camera.Pick( mouseCoords, mask )
 		
 		'Handle events
 		If _lastMousePick
