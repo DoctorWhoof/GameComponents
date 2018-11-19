@@ -1,7 +1,6 @@
 
 Namespace gui3d
 
-
 Class GuiComponent Extends Component Abstract
 	
 	Const Type:=New ComponentType( "GuiComponent",0,Null )
@@ -10,6 +9,8 @@ Class GuiComponent Extends Component Abstract
 	
 	Global _mouse:Vec2f		'Allows a "local" mouse coordinate, that can be scaled if needed. Useful when rendering to a texture.
 	Global _invertedMouse:Vec2f
+	
+	Global guiComponentMap := New Map< Entity, Stack<GuiComponent> >
 	
 	Public
 	
@@ -25,6 +26,16 @@ Class GuiComponent Extends Component Abstract
 	
 	'**************************** Public Functions *****************************
 	
+	Function GetStack:Stack<GuiComponent>( entity:Entity )
+		Return guiComponentMap[ entity ]
+	End
+	
+	
+	Function Clear()
+		guiComponentMap.Clear()
+	End
+	
+	
 	Function SetScaledMouse( coords:Vec2f, cameraViewport:Recti )
 		_mouse = coords
 		_invertedMouse = New Vec2f( _mouse.X, cameraViewport.Height - _mouse.y )
@@ -34,19 +45,19 @@ Class GuiComponent Extends Component Abstract
 	
 	Method New( entity:Entity )
 		Super.New( entity,Type )
-		Local componentStack := gui3d.componentMap[ entity ]
+		Local componentStack := guiComponentMap[ entity ]
 		
 		If Not componentStack
-			gui3d.componentMap.Add( entity, New Stack<GuiComponent> )
-			componentStack = gui3d.componentMap[ entity ]
+			guiComponentMap.Add( entity, New Stack<GuiComponent> )
+			componentStack = guiComponentMap[ entity ]
 		End
 		
 		componentStack.Add(Self)
 		
 		entity.Destroyed += Lambda()
 			Print "Destroying " + entity.Name
-			gui3d.componentMap[ entity ].Clear()
-			gui3d.componentMap.Remove( entity )
+			guiComponentMap[ entity ].Clear()
+			guiComponentMap.Remove( entity )
 		End
 	End
 	

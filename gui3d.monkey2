@@ -12,5 +12,5 @@ Namespace gui3d
 Using std..
 Using mojo..
 Using mojo3d..
+Using gui3d..
 
-Global componentMap := New Map< Entity, Stack<GuiComponent> >

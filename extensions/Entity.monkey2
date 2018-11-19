@@ -3,7 +3,7 @@ Namespace gui3d
 Class Entity Extension
 	
 	Method MouseOverEvent()
-		Local guiStack := gui3d.componentMap[ Self ]
+		Local guiStack := GuiComponent.GetStack( Self )
 		If guiStack
 			For Local c := Eachin guiStack
 				c.OnMouseOver()
@@ -13,7 +13,7 @@ Class Entity Extension
 	
 	
 	Method MouseEnterEvent()
-		Local guiStack := gui3d.componentMap[ Self ]
+		Local guiStack := GuiComponent.GetStack( Self )
 		If guiStack
 			For Local c := Eachin guiStack
 				c.OnMouseEnter()
@@ -23,7 +23,7 @@ Class Entity Extension
 	
 	
 	Method MouseLeaveEvent()
-		Local guiStack := gui3d.componentMap[ Self ]
+		Local guiStack := GuiComponent.GetStack( Self )
 		If guiStack
 			For Local c := Eachin guiStack
 				c.OnMouseLeave()
@@ -33,7 +33,7 @@ Class Entity Extension
 	
 	
 	Method MouseClickEvent( button:MouseButton )
-		Local guiStack := gui3d.componentMap[ Self ]
+		Local guiStack := GuiComponent.GetStack( Self )
 		If guiStack
 			For Local c := Eachin guiStack
 				c.OnMouseClick( button )
@@ -43,7 +43,7 @@ Class Entity Extension
 	
 	
 	Method MouseHoldEvent( button:MouseButton )
-		Local guiStack := gui3d.componentMap[ Self ]
+		Local guiStack := GuiComponent.GetStack( Self )
 		If guiStack
 			For Local c := Eachin guiStack
 				c.OnMouseHold( button )
@@ -53,7 +53,7 @@ Class Entity Extension
 	
 	
 	Method MouseReleaseEvent( button:MouseButton )
-		Local guiStack := gui3d.componentMap[ Self ]
+		Local guiStack := GuiComponent.GetStack( Self )
 		If guiStack
 			For Local c := Eachin guiStack
 				c.OnMouseRelease( button )
