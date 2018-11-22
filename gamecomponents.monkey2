@@ -1,10 +1,12 @@
-Namespace gui3d
+Namespace gamecomponents
 
 #Import "<std>"
 #Import "<mojo>"
 #Import "<mojo3d>"
 
 #Import "components/GuiComponent"
+#Import "components/GameComponent"
+
 #Import "extensions/Scene"
 #Import "extensions/Entity"
 #Import "extensions/Canvas"
@@ -12,5 +14,5 @@ Namespace gui3d
 Using std..
 Using mojo..
 Using mojo3d..
-Using gui3d..
+Using gamecomponents..
 

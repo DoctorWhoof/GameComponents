@@ -1,6 +1,84 @@
-Namespace gui3d
+Namespace gamecomponents
 
 Class Entity Extension
+	
+	'------------------------- Recursive methods that propagate to children. Called by Scene -------------------------
+	
+	
+	Method Draw( canvas:Canvas )
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnDraw( canvas )
+			Next
+		End
+		For Local child := Eachin Children
+			child.Draw( canvas )
+		Next
+	End
+	
+	
+	Method LateUpdate()
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnLateUpdate()
+			Next
+		End
+		For Local child := Eachin Children
+			child.LateUpdate()
+		Next
+	End
+	
+	
+	Method Reset()
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnReset()
+			Next
+		End
+		For Local child := Eachin Children
+			child.Reset()
+		Next
+	End
+	
+	
+	'------------------------- Collision events -------------------------
+		
+	
+	Method CollisionEnterEvent( body:RigidBody )
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnCollisionEnter( body )
+			Next
+		End
+	End
+	
+	
+	Method CollisionStayEvent( body:RigidBody )
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnCollisionStay( body )
+			Next
+		End
+	End
+	
+	
+	Method CollisionLeaveEvent( body:RigidBody )
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnCollisionLeave( body )
+			Next
+		End
+	End
+	
+	
+	'------------------------- Mouse events -------------------------
+
 	
 	Method MouseOverEvent()
 		Local guiStack := GuiComponent.GetStack( Self )

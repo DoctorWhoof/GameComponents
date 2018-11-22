@@ -1,5 +1,4 @@
-
-Namespace gui3d
+Namespace gamecomponents
 
 Private
 
@@ -10,8 +9,28 @@ Public
 
 Class Scene Extension
 	
+	Method Draw( canvas:Canvas )
+		For Local e := Eachin GetRootEntities()
+			e.Draw( canvas )
+		Next
+	End
+	
+	
+	Method LateUpdate()
+		For Local e := Eachin GetRootEntities()
+			e.LateUpdate()
+		Next
+	End
+	
+	
+	Method Reset()
+		For Local e := Eachin GetRootEntities()
+			e.Reset()
+		Next
+	End
+	
+	
 	Method UpdateGui3D( camera:Camera, mouseCoords:Vec2f, mask:Int = -1 )
-		
 		'Enter (possibly scaled) mouse coordinates
 		GuiComponent.SetScaledMouse( mouseCoords, camera.Viewport )
 		

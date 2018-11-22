@@ -1,5 +1,5 @@
 
-Namespace gui3d
+Namespace gamecomponents
 
 Class GuiComponent Extends Component Abstract
 	
