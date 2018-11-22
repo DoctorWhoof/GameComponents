@@ -47,7 +47,7 @@ Class Entity Extension
 	'------------------------- Collision events -------------------------
 		
 	
-	Method CollisionEnterEvent( body:RigidBody )
+	Method CollisionEnter( body:RigidBody )
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
@@ -57,7 +57,7 @@ Class Entity Extension
 	End
 	
 	
-	Method CollisionStayEvent( body:RigidBody )
+	Method CollisionStay( body:RigidBody )
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
@@ -67,7 +67,7 @@ Class Entity Extension
 	End
 	
 	
-	Method CollisionLeaveEvent( body:RigidBody )
+	Method CollisionLeave( body:RigidBody )
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack

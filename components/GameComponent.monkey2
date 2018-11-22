@@ -2,13 +2,13 @@
 Namespace gamecomponents
 
 
-Class GameComponent Extends Component Abstract
+Class GameComponent Extends Component
 	
 	Const Type:=New ComponentType( "GameComponent",0,Null )
 	
 	Private
 	
-	Global gameComponentMap := New Map< Entity, Stack<GameComponent> >
+	Global _gameComponentMap := New Map< Entity, Stack<GameComponent> >
 	
 	Public
 	
@@ -18,33 +18,34 @@ Class GameComponent Extends Component Abstract
 	'**************************** Public Functions *****************************
 	
 	Function GetStack:Stack<GameComponent>( entity:Entity )
-		Return gameComponentMap[ entity ]
+		Return _gameComponentMap[ entity ]
 	End
 	
 	
 	Function Clear()
-		gameComponentMap.Clear()
+		_gameComponentMap.Clear()
 	End
 	
 	'***************************** Public Methods ****************************** 
 	
 	Method New( entity:Entity )
 		Super.New( entity,Type )
-		Local componentStack := gameComponentMap[ entity ]
+		Local componentStack := _gameComponentMap[ entity ]
 		
 		If Not componentStack
-			gameComponentMap.Add( entity, New Stack<GameComponent> )
-			componentStack = gameComponentMap[ entity ]
+			_gameComponentMap.Add( entity, New Stack<GameComponent> )
+			componentStack = _gameComponentMap[ entity ]
 		End
 		
 		componentStack.Add(Self)
 		
 		entity.Destroyed += Lambda()
 			Print "Destroying " + entity.Name
-			gameComponentMap[ entity ].Clear()
-			gameComponentMap.Remove( entity )
+			_gameComponentMap[ entity ].Clear()
+			_gameComponentMap.Remove( entity )
 		End
 	End
+	
 	
 	'************************************* Virtual methods *************************************
 	
@@ -55,6 +56,7 @@ Class GameComponent Extends Component Abstract
 		OnHide()
 		OnStart()
 		OnBeginUpdate()
+		OnEndUpdate()
 		OnUpdate( elapsed:Float )
 		OnDestroy()
 		OnCollide( body:RigidBody )

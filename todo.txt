@@ -1,0 +1,4 @@
+
++ Create a super class AdvancedComponent with common methods that is extended by:
+	+ GuiComponent
+	+ GameComponent

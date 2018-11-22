@@ -6,10 +6,12 @@ Namespace gamecomponents
 
 #Import "components/GuiComponent"
 #Import "components/GameComponent"
+#Import "components/GameBody"
 
 #Import "extensions/Scene"
 #Import "extensions/Entity"
 #Import "extensions/Canvas"
+
 
 Using std..
 Using mojo..

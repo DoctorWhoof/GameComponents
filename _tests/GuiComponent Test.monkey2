@@ -1,7 +1,7 @@
 Namespace myapp3d
 
-#Import "../gui3d"
-Using gui3d..
+#Import "../gamecomponents"
+Using gamecomponents..
 
 
 Class MyWindow Extends Window
@@ -98,7 +98,7 @@ Class MyWindow Extends Window
 		_camera.View = Self
 		_camera.Render( canvas )
 		
-		canvas.DrawGui3D( _scene )
+		canvas.DrawGameComponents( _scene )
 		canvas.DrawText( "Mouse over objects to change color. Click to see output message.",0 ,0 )
 	End
 End
