@@ -12,6 +12,7 @@ Namespace gamecomponents
 #Import "extensions/Entity"
 #Import "extensions/Canvas"
 
+#Reflect gamecomponents
 
 Using std..
 Using mojo..

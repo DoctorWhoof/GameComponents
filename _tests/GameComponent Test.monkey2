@@ -29,11 +29,11 @@ Class CollisionColor Extends GameComponent
 		Super.New( e )
 	End
 
-	Method OnCollisionEnter( body:RigidBody ) Override
+	Method OnCollisionEnter( other:Entity, this:Entity ) Override
 		Entity.Color = Color.Red
 	End
 	
-	Method OnCollisionLeave( body:RigidBody ) Override
+	Method OnCollisionLeave( other:Entity, this:Entity ) Override
 		Entity.Color = Color.White
 	End
 	
@@ -52,7 +52,7 @@ Class MyWindow Extends Window
 	
 	Method New()
 
-		Super.New( "Banana banana",1440,810,WindowFlags.Resizable | WindowFlags.HighDPI )
+		Super.New( "Banana banana",1440,810,WindowFlags.Resizable )' | WindowFlags.HighDPI )
 		Layout="letterbox"
 		_res = New Vec2i( Width, Height )
 		
@@ -68,6 +68,7 @@ Class MyWindow Extends Window
 		_scene.FogFar = 20.0
 		
 		_scene.AddPostEffect( New FXAAEffect )
+'		_scene.AddPostEffect( New MonochromeEffect )
 		
 		'create camera
 		_camera=New Camera
@@ -76,6 +77,7 @@ Class MyWindow Extends Window
 		_camera.Far=60
 		_camera.FOV=60
 		_camera.Move( 0,0.3,-1.2 )
+		_camera.RotateX(25)
 		
 		Local fly := New FlyBehaviour( _camera )
 		fly.Speed = 0.02
@@ -98,6 +100,7 @@ Class MyWindow Extends Window
 		
 		Local groundBody:=New RigidBody( _ground )
 		groundBody.Mass=0
+'		groundBody.Kinematic=True
 		groundBody.CollisionGroup=64
 		groundBody.CollisionMask=127
 
@@ -122,9 +125,11 @@ Class MyWindow Extends Window
 			bananew.Position = New Vec3f( Rnd(-2,2), Rnd(0.5,1.5), Rnd (-1, 1) )
 			bananew.Rotation = New Vec3f( Rnd(-45,45), Rnd(-180,180), Rnd (-45,45) )
 			bananew.AddComponent<CollisionColor>()
+'			bananew.Color = New Color( 0, Rnd(0.3,1.0), 0 )
+'			bananew.Color = Color.Red
 		Next
 		
-		_scene.World.Gravity = New Vec3f( 0, -4, 0 )
+		_scene.World.Gravity = New Vec3f( 0, -1, 0 )
 		banana.Visible = False
 	End
 	

@@ -2,11 +2,15 @@
 Namespace gamecomponents
 
 
-Class GameComponent Extends Component
+Class GameComponent Extends Component Abstract
+	
+	Field enabled:= True
 	
 	Const Type:=New ComponentType( "GameComponent",0,Null )
 	
 	Private
+	
+	Field _state := New Map<String, Variant>
 	
 	Global _gameComponentMap := New Map< Entity, Stack<GameComponent> >
 	
@@ -40,10 +44,64 @@ Class GameComponent Extends Component
 		componentStack.Add(Self)
 		
 		entity.Destroyed += Lambda()
-			Print "Destroying " + entity.Name
-			_gameComponentMap[ entity ].Clear()
+			_gameComponentMap[ entity ]?.Clear()
 			_gameComponentMap.Remove( entity )
 		End
+	End
+	
+	Method SaveState()
+		_state = GetState()
+	End
+	
+	Method RestoreState()
+		CopyState( _state )
+	End
+	
+	Method CopyState( state:Map<String,Variant> )
+		If Not state.Empty
+			Local info := Self.DynamicType
+			Local decls := New Stack<DeclInfo>()
+			decls.AddAll( info.GetDecls() )
+			
+			'Sort by [priority=n] metadata. Higher values are copied first.
+			decls.Sort( Lambda:Int( a:DeclInfo, b:DeclInfo )
+				Local aPriority := Int(a.GetMetaValue( "priority" ) )
+				Local bPriority := Int( b.GetMetaValue( "priority" ) )
+				Return bPriority <=> aPriority
+			End )
+			
+			'Copies value, if key is present in map
+'			Print "Copy: " + Entity.Name + "; " + info.Name
+			For Local d := Eachin decls
+				Local v := state[d.Name]
+				If v
+'					Print "    " + d.Name + ": " + d.Type.Name + " ; priority=" + Int(d.GetMetaValue( "priority" ))
+					d.Set( Self, v )
+				End
+			End
+		End
+	End
+	
+	Method GetState:Map<String,Variant>()
+		Local state:= New Map<String,Variant>
+		Local info := Self.DynamicType
+		For Local d := Eachin info.GetDecls()
+			If d.Gettable And d.Settable And Not d.Name.StartsWith( "_" )
+				state.Add( d.Name, d.Get( Self ) )
+			End
+		End
+		Return state
+	End
+	
+	
+	Method GetSavedState:Map<String,Variant>()
+		Return _state.Copy()
+	End
+	
+	
+	Method Reset()
+		RestoreState()
+		OnReset()
 	End
 	
 	
@@ -66,6 +124,10 @@ Class GameComponent Extends Component
 	Method OnDraw( canvas:Canvas ) Virtual
 	End
 	
+	'Useful when drawing to two distinct canvases (for instance, one low res, one high res)
+	Method OnLateDraw( canvas:Canvas ) Virtual
+	End
+	
 	'Called after all entities have been updated
 	Method OnLateUpdate() Virtual
 	End
@@ -75,18 +137,15 @@ Class GameComponent Extends Component
 	End
 	
 	'Called a single frame when collision starts
-	Method OnCollisionEnter( body:RigidBody ) Virtual
+	Method OnCollisionEnter( other:Entity, this:Entity ) Virtual
 	End
 	
 	'Called for every frame while a collision lasts
-	Method OnCollisionStay( body:RigidBody ) Virtual
+	Method OnCollisionStay( other:Entity, this:Entity ) Virtual
 	End
 	
 	'Called a single frame when collision ends
-	Method OnCollisionLeave( body:RigidBody ) Virtual
+	Method OnCollisionLeave( other:Entity, this:Entity ) Virtual
 	End
-	
-	
-	
 	
 End

@@ -1,6 +1,21 @@
 Namespace gamecomponents
 
 Class Entity Extension
+
+	Property Enabled:Bool()
+		Return True				'temporary hack! Only affects components for now.
+	Setter( value:Bool )
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.enabled = value
+			Next
+		End
+		For Local child := Eachin Children
+			child.Enabled = value
+		Next
+	End
+		
 	
 	'------------------------- Recursive methods that propagate to children. Called by Scene -------------------------
 	
@@ -18,11 +33,24 @@ Class Entity Extension
 	End
 	
 	
+	Method LateDraw( canvas:Canvas )
+		Local gameStack := GameComponent.GetStack( Self )
+		If gameStack
+			For Local c := Eachin gameStack
+				c.OnLateDraw( canvas )
+			Next
+		End
+		For Local child := Eachin Children
+			child.LateDraw( canvas )
+		Next
+	End
+	
+	
 	Method LateUpdate()
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
-				c.OnLateUpdate()
+				If c.enabled Then c.OnLateUpdate()
 			Next
 		End
 		For Local child := Eachin Children
@@ -35,7 +63,7 @@ Class Entity Extension
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
-				c.OnReset()
+				c.Reset()
 			Next
 		End
 		For Local child := Eachin Children
@@ -47,31 +75,31 @@ Class Entity Extension
 	'------------------------- Collision events -------------------------
 		
 	
-	Method CollisionEnter( body:RigidBody )
+	Method CollisionEnter( other:Entity )
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
-				c.OnCollisionEnter( body )
+				c.OnCollisionEnter( other, Self )
 			Next
 		End
 	End
 	
 	
-	Method CollisionStay( body:RigidBody )
+	Method CollisionStay( other:Entity  )
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
-				c.OnCollisionStay( body )
+				c.OnCollisionStay( other, Self )
 			Next
 		End
 	End
 	
 	
-	Method CollisionLeave( body:RigidBody )
+	Method CollisionLeave( other:Entity  )
 		Local gameStack := GameComponent.GetStack( Self )
 		If gameStack
 			For Local c := Eachin gameStack
-				c.OnCollisionLeave( body )
+				c.OnCollisionLeave( other, Self )
 			Next
 		End
 	End

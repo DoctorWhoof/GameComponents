@@ -23,6 +23,13 @@ Class Scene Extension
 	End
 	
 	
+	Method LateDraw( canvas:Canvas )
+		For Local e := Eachin GetRootEntities()
+			e.LateDraw( canvas )
+		Next
+	End
+	
+	
 	Method Reset()
 		For Local e := Eachin GetRootEntities()
 			e.Reset()

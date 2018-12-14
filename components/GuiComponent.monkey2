@@ -20,7 +20,7 @@ Class GuiComponent Extends Component Abstract
 		Return _invertedMouse
 	End
 	
-	Property ScaledMouse:Vec2f()
+	Property ScaledMouse :Vec2f()
 		Return _mouse
 	End
 	

@@ -7,9 +7,11 @@ Class GameBody Extends RigidBody
 	
 	Const Type:=New ComponentType( "GameBody",-10,ComponentTypeFlags.Singleton )
 	
+	Protected
 	Field _collisions:= New Stack<RigidBody>
 	Field _lastCollisions:= New Stack<RigidBody>
 	
+	Public
 	Method New( e:Entity )
 		Super.New( e )
 		SetupEvents()
@@ -25,17 +27,15 @@ Class GameBody Extends RigidBody
 			_collisions.Add( other )
 			
 			If _lastCollisions.Contains( other )
-				Entity.CollisionStay( other )
+				Entity.CollisionStay( other.Entity )
 			Else
-				Entity.CollisionEnter( other )
+				Entity.CollisionEnter( other.Entity )
 			End
 			
 		End
 	End
 	
-	'Remember to call Super.Method if you override these!
-	
-	Method OnCopy:RigidBody( entity:Entity ) Override
+	Method OnCopy:GameBody( entity:Entity ) Override
 		Local body:=New GameBody( entity,Self )
 		Return body
 	End
@@ -45,7 +45,7 @@ Class GameBody Extends RigidBody
 		
 		For Local body := Eachin _lastCollisions
 			If Not _collisions.Contains( body )
-				Entity.CollisionLeave( body )
+				Entity.CollisionLeave( body.Entity )
 			End
 		Next
 		

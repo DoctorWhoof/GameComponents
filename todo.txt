@@ -1,4 +1,4 @@
 
-+ Create a super class AdvancedComponent with common methods that is extended by:
-	+ GuiComponent
-	+ GameComponent
+! Create a super class AdvancedComponent with common methods that is extended by GuiComponent and GameComponent
+	! On second thought, maybe not a good idea.
+	! Would require a third component map, with another loop going though all shared methods
